@@ -3,11 +3,9 @@ Tests for recipe APIs.
 """
 
 from decimal import Decimal
-
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
-
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -16,13 +14,13 @@ from core.models import (
     Tag,
 )
 
-
 from recipe.serializers import (
     RecipeSerializer,
     RecipeDetailSerializer,
 )
 
 RECIPES_URL = reverse('recipe:recipe-list')
+
 
 def detail_url(recipe_id):
     """Create and return a recipe detail URL."""
@@ -42,6 +40,7 @@ def create_recipe(user, **params):
 
     recipe = Recipe.objects.create(user=user, **defaults)
     return recipe
+
 
 def create_user(**params):
     """Create and return a new user."""
@@ -66,7 +65,10 @@ class PrivateRecipeAPITests(TestCase):
 
     def setUp(self):
         self.client = APIClient()
-        self.user = create_user(email='user@example.com', password='testpass123')
+        self.user = create_user(
+            email='user@example.com',
+            password='testpass123'
+        )
 
         self.client.force_authenticate(self.user)
 
@@ -84,7 +86,7 @@ class PrivateRecipeAPITests(TestCase):
 
     def test_recipe_list_limited_to_user(self):
         """Test list of recipes is limited to authenticated user."""
-        other_user = create_user(email='other@example.com',password='test123')
+        other_user = create_user(email='other@example.com', password='test123')
         create_recipe(user=other_user)
         create_recipe(user=self.user)
 
