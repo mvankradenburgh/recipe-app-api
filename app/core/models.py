@@ -1,7 +1,7 @@
 """
 Database models
 """
-from sre_constants import MAX_UNTIL
+#from sre_constants import MAX_UNTIL
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
